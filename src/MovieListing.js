@@ -13,6 +13,12 @@ export default function MovieListing() {
         .catch(err => console.log(err));
     }
 
+    const renderTitle = () => { // Function to render the title.
+        if(apiData !== null){
+            return apiData.title
+        }
+    }
+
     const renderMovies = () => { // Function to render <li> items with movie info.
 
         if(apiData !== null){ // Check if apiData has the data yet.
@@ -39,9 +45,9 @@ export default function MovieListing() {
 
     return (
         <>
-            <h1>Title</h1>
+            <h1>{renderTitle()}</h1>
             <ul>
-                {apiData === null ? "" : renderMovies()}
+                {renderMovies()}
             </ul>
         </>
     )
