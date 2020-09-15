@@ -23,6 +23,11 @@ export default function MovieListing() {
     }
 
     useEffect(() => { // Effect will happen when component mounts.
+
+        if(apiData === null){
+            handleApi()
+        }
+
         setInterval(() => {
             handleApi()
         },5000)
