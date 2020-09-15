@@ -10,7 +10,7 @@ export default function MovieListing() {
     const handleApi = () => { // Function to fetch and store api data to apiData state.
         axios.get(API_URL)
         .then(res => setApiData(res.data))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     }
 
     const renderMovies = () => { // Function to render <li> items with movie info.
@@ -28,10 +28,14 @@ export default function MovieListing() {
             handleApi()
         }
 
-        setInterval(() => {
+        const refresh = setInterval(() => { // Timer to run handleApi every 5 seconds
             handleApi()
-        },5000)
-    },[]);
+        },5000);
+
+        return () => { // Clear timer when component is unmounted. This is important so we don't have multiple timers.
+            clearInterval(refresh);
+        }
+    },[apiData]);
 
     return (
         <>
