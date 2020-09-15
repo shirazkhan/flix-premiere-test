@@ -7,34 +7,41 @@ export default function MovieListing({minDuration = 5500}) {
 
     const [apiData,setApiData] = useState(null);
 
-    const handleApi = () => { // Function to fetch and store api data to apiData state.
+    // Function to fetch and store api data to apiData state.
+    const handleApi = () => {
         axios.get(API_URL)
         .then(res => setApiData(res.data))
         .catch(err => console.log(err));
     }
 
-    const renderTitle = () => { // Function to render the title.
-        if(apiData !== null){
+    // Function to render the title.
+    const renderTitle = () => {
+        if(apiData !== null){ // If apiData has been loaded, then load the title.
             return apiData.title
         }
     }
 
-    const renderMovies = () => { // Function to render <li> items with movie info.
-
-        if(apiData !== null){ // Check if apiData has the data yet.
+    // Function to render <li> items with movie info.
+    const renderMovies = () => {
+        if(apiData !== null){ // If apiData has been loaded, then map each film correctly.
             return apiData.films.map(film => {
-                return <li key = {film.id}>{`${film.title} (${film.duration_seconds} Seconds)`}</li>
+                if(film.duration_seconds > minDuration){
+                    return <li key = {film.id}>{`${film.title} (${film.duration_seconds} Seconds)`}</li>
+                } else {
+                    return ""
+                }
             })
         }
     }
 
-    useEffect(() => { // Effect will happen when apiData state is changed.
+    // Effect will happen when apiData state is changed.
+    useEffect(() => {
 
         if(apiData === null){
             handleApi()
         }
 
-        const refresh = setInterval(() => { // Timer to run handleApi every 5 seconds
+        const refresh = setInterval(() => { // Run handleApi every 5 seconds
             handleApi()
         },5000);
 
