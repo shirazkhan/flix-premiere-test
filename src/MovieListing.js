@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const API_URL = "https://api.flixpremiere.com/v1/films/filter/now_showing?limit=10";
 
-export default function MovieListing() {
+export default function MovieListing({minDuration = 5500}) {
 
     const [apiData,setApiData] = useState(null);
 
@@ -28,7 +28,7 @@ export default function MovieListing() {
         }
     }
 
-    useEffect(() => { // Effect will happen when component mounts.
+    useEffect(() => { // Effect will happen when apiData state is changed.
 
         if(apiData === null){
             handleApi()
