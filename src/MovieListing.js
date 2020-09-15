@@ -15,15 +15,22 @@ export default function MovieListing() {
 
     const renderMovies = () => { // Function to render <li> items with movie info.
 
-        if(apiData !== null){ // If apiData has the information
-            apiData.films.map(film => {
+        if(apiData !== null){ // Check if apiData has the data yet.
+            return apiData.films.map(film => {
                 return <li key = {film.id}>{`${film.title} (${film.duration_seconds} Seconds)`}</li>
             })
         }
     }
 
+    useEffect(() => { // Effect will happen when component mounts.
+        setInterval(() => {
+            handleApi()
+        },5000)
+    },[]);
+
     return (
         <>
+            <h1>Title</h1>
             <ul>
                 {apiData === null ? "" : renderMovies()}
             </ul>
